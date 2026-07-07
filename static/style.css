@@ -759,7 +759,7 @@ body {
 
 .workspace-grid {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: minmax(0, 1fr) 340px;
     gap: 2rem;
     align-items: start;
 }
@@ -1361,7 +1361,7 @@ body {
 /* ==========================================================================
    Responsive Viewport Design System
    ========================================================================== */
-@media (max-width: 992px) {
+@media (max-width: 1150px) {
     .workspace-grid {
         grid-template-columns: 1fr;
     }
