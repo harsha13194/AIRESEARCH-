@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>The Personal Researcher - Premium AI Agent</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- HLS Video Library -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <!-- CodeNest Full Screen Background Video & Overlay System -->
+    <div class="codenest-video-container">
+        <video id="codenest-bg-video" autoplay loop muted playsinline class="codenest-video"></video>
+        <div class="codenest-overlay-gradient-left"></div>
+        <div class="codenest-overlay-gradient-bottom"></div>
+    </div>
+
+    <!-- 3 vertical grid lines -->
+    <div class="codenest-grid-lines">
+        <div class="grid-line" style="left: 25%;"></div>
+        <div class="grid-line" style="left: 50%;"></div>
+        <div class="grid-line" style="left: 75%;"></div>
+    </div>
+
+    <!-- Central SVG Ellipse Glow -->
+    <div class="codenest-central-glow">
+        <svg width="100%" height="100%" style="position: absolute; overflow: visible;">
+            <defs>
+                <filter id="glow-blur" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="25" />
+                </filter>
+                <radialGradient id="glow-gradient" cx="50%" cy="0%" r="50%">
+                    <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.6" />
+                    <stop offset="50%" stop-color="#064e3b" stop-opacity="0.3" />
+                    <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+                </radialGradient>
+            </defs>
+            <ellipse cx="50%" cy="0" rx="350" ry="120" fill="url(#glow-gradient)" filter="url(#glow-blur)" />
+        </svg>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="nav-logo-circle"></div>
+                <span class="logo-text">AI<span class="highlight">Research</span></span>
+            </div>
+            
+            
+            <!-- Right Actions -->
+            <div class="nav-right">
+                <div class="badge">
+                    <span class="pulse-dot"></span>
+                    <span>Researcher Active</span>
+                </div>
+                <!-- Hamburger Button -->
+                <button type="button" class="hamburger-btn" id="hamburger-btn" title="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Full-Screen Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <button type="button" class="close-menu-btn" id="close-menu-btn" title="Close Menu">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="mobile-menu-content">
+            <a href="#search-section" class="mobile-menu-link">RESEARCH</a>
+            <a href="#workspace-section" class="mobile-menu-link">WORKSPACE</a>
+            <a href="#settings-toggle-btn" class="mobile-menu-link">SETTINGS</a>
+            <a href="#history-bar" class="mobile-menu-link">HISTORY</a>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <!-- Hero Section & Input -->
+        <section class="hero-section" id="search-section">
+        
+             
+
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <div class="eyebrow">State-of-the-Art Synthesis</div>
+                <h1 class="hero-title">DEEP WEB RESEARCH AGENT<span class="period">.</span></h1>
+                <p class="hero-subtitle">Enter any topic below. Our specialized scraping agent will crawl duckduckgo index nodes, strip boilerplates, parse definitions, compile timelines, and write detailed reports.</p>
+                
+                <div class="cta-container">
+                    <button type="button" class="cta-btn" id="cta-get-started">
+                        <span>Start Research</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search box container (The actual search functionality) -->
+            <div class="search-box-container">
+                <form id="search-form" class="search-form">
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+                        <input type="text" id="topic-input"
+                            placeholder="Enter a research topic (e.g. React Server Components, WebRTC, Rust concurrency)"
+                            required autocomplete="off">
+                        <button type="button" class="mic-btn" id="mic-btn" title="Speak Topic">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="search-btn">
+                        <span>Research Topic</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Advanced Agent Settings Drawer -->
+            <div class="settings-drawer-container">
+                <button type="button" class="settings-toggle-btn" id="settings-toggle-btn">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Advanced Agent Settings</span>
+                    <i class="fa-solid fa-chevron-down chevron-icon" id="settings-chevron"></i>
+                </button>
+                <div class="settings-content hidden" id="settings-content">
+                    <div class="settings-card-inner">
+                        <div class="settings-grid">
+                            <!-- NVIDIA API Key -->
+                            <div class="settings-item">
+                                <label for="api-key-input">
+                                    <i class="fa-solid fa-key key-icon"></i> NVIDIA API Key (Optional)
+                                </label>
+                                <div class="settings-input-wrapper">
+                                    <input type="password" id="api-key-input"
+                                        placeholder="Enter nvapi-... to supercharge research using Llama-3-Nemotron"
+                                        autocomplete="off">
+                                    <button type="button" class="visibility-btn" id="toggle-key-visibility"
+                                        title="Toggle Visibility">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </div>
+                                <span class="settings-hint">Provide an NVIDIA API key to supercharge report generation
+                                    using the advanced `llama-3.1-nemotron-70b-instruct` model for a professional
+                                    synthesis and detailed Executive Summary.</span>
+                            </div>
+
+                            <!-- ElevenLabs API Key -->
+                            <div class="settings-item">
+                                <label for="eleven-key-input">
+                                    <i class="fa-solid fa-microphone-lines key-icon-alt"></i> ElevenLabs API Key
+                                    (Optional)
+                                </label>
+                                <div class="settings-input-wrapper">
+                                    <input type="password" id="eleven-key-input"
+                                        placeholder="Enter ElevenLabs key to enable report narration"
+                                        autocomplete="off">
+                                    <button type="button" class="visibility-btn" id="toggle-eleven-visibility"
+                                        title="Toggle Visibility">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </div>
+                                <span class="settings-hint">Provide an ElevenLabs API key to narrate the generated
+                                    Executive Summary and report sections using life-like, expressive AI voices.</span>
+                            </div>
+
+                            <!-- Voice Selector -->
+                            <div class="settings-item">
+                                <label for="voice-selector">
+                                    <i class="fa-solid fa-volume-high voice-icon"></i> Narrator Voice
+                                </label>
+                                <div class="settings-select-wrapper">
+                                    <select id="voice-selector" class="settings-select">
+                                        <option value="21m00Tcm4TlvDq8ikWAM" selected>Rachel (Pleasant Female)</option>
+                                        <option value="cgSgspJ2msm6clMCmAQX">George (Professional Male)</option>
+                                        <option value="EXAVITQu4vr4xnSDxMaL">Bella (Narrative Female)</option>
+                                        <option value="ErXwobaYiN019PkySvjV">Antoni (Crisp Male)</option>
+                                    </select>
+                                </div>
+                                <span class="settings-hint">Choose your signature AI voice narrator. Persisted locally
+                                    in your browser.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading / Progress Agent Terminal -->
+        <section class="agent-terminal-section hidden" id="terminal-section">
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="terminal-title">agent_terminal@researcher: ~</div>
+                    <div class="terminal-status">CRAWLER ONLINE</div>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-line"><span class="t-prompt">$</span> initialize_agent --topic="<span
+                            id="terminal-topic-val"></span>"</div>
+                    <div class="terminal-line text-info">Agent initialized. Preparing research pathways...</div>
+                </div>
+                <div class="terminal-footer">
+                    <div class="loader-bar">
+                        <div class="loader-progress" id="loader-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Workspace (Hidden until results are ready) -->
+        <section class="workspace-section hidden" id="workspace-section">
+
+            <div class="workspace-grid">
+                <!-- Left Side: Synthesized Report -->
+                <div class="workspace-left">
+                    <div class="workspace-card main-report-card">
+                        <div class="card-header">
+                            <div class="tabs">
+                                <button class="tab-btn active" data-tab="full-report">
+                                    <i class="fa-regular fa-file-lines"></i> Full Report
+                                </button>
+                                <button class="tab-btn" data-tab="definitions">
+                                    <i class="fa-solid fa-book"></i> Core Concepts
+                                </button>
+                                <button class="tab-btn" data-tab="statistics">
+                                    <i class="fa-solid fa-chart-simple"></i> Key Data
+                                </button>
+                                <button class="tab-btn" data-tab="history">
+                                    <i class="fa-solid fa-clock-rotate-left"></i> Timeline
+                                </button>
+                            </div>
+                            <div class="actions">
+                                <button class="action-btn" id="btn-speak" title="Listen to Summary (ElevenLabs)">
+                                    <i class="fa-solid fa-play" id="speak-icon"></i> <span id="speak-text">Listen</span>
+                                </button>
+                                <button class="action-btn" id="btn-copy" title="Copy Raw Markdown">
+                                    <i class="fa-regular fa-copy"></i> Copy MD
+                                </button>
+                                <button class="action-btn" id="btn-pdf" title="Export as PDF">
+                                    <i class="fa-regular fa-file-pdf"></i> Export PDF
+                                </button>
+                                <button class="action-btn btn-close" id="btn-new-research">
+                                    <i class="fa-solid fa-rotate-left"></i> New Search
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Full Markdown Report -->
+                            <div class="tab-content active" id="tab-full-report">
+                                <div class="markdown-body" id="report-rendered">
+                                    <!-- Dynamic Markdown content here -->
+                                </div>
+                            </div>
+
+                            <!-- Definitions tab -->
+                            <div class="tab-content" id="tab-definitions">
+                                <div class="grid-list-view" id="definitions-view">
+                                    <!-- Dynamic definitions -->
+                                </div>
+                            </div>
+
+                            <!-- Statistics tab -->
+                            <div class="tab-content" id="tab-statistics">
+                                <div class="grid-list-view" id="statistics-view">
+                                    <!-- Dynamic stats -->
+                                </div>
+                            </div>
+
+                            <!-- History / Timeline tab -->
+                            <div class="tab-content" id="tab-history">
+                                <div class="timeline-view" id="timeline-view">
+                                    <!-- Dynamic timeline -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Sidebar metrics & Sources -->
+                <div class="workspace-right">
+                    <!-- Metrics Panel -->
+                    <div class="workspace-card metrics-card">
+                        <h3>Agent Synthetics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <span class="metric-num" id="metric-sources">0</span>
+                                <span class="metric-label">Links Crawled</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-num" id="metric-concepts">0</span>
+                                <span class="metric-label">Concepts Found</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-num" id="metric-stats">0</span>
+                                <span class="metric-label">Facts Cataloged</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sources List -->
+                    <div class="workspace-card sources-card">
+                        <div class="sources-header">
+                            <h3>Scraped Sources</h3>
+                            <span class="source-count" id="source-badge">0 Sites</span>
+                        </div>
+                        <div class="sources-list" id="sources-list-container">
+                            <!-- Dynamic source links -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Session History bottom bar -->
+        <footer class="history-bar hidden" id="history-bar">
+            <div class="history-container">
+                <span class="history-title"><i class="fa-solid fa-clock-rotate-left"></i> Session History:</span>
+                <div class="history-chips" id="history-chips">
+                    <!-- Historical searches -->
+                </div>
+                <button type="button" class="clear-history-btn" id="clear-history-btn" title="Clear History">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span>Clear History</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <footer class="main-footer">
+        <p></p>
+    </footer>
+
+    <!-- Frontend logic script -->
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
